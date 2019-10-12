@@ -1,9 +1,9 @@
 import dotenv from "dotenv";
 import { DataTypes, Sequelize } from "sequelize";
 
+import { PointTransactions } from "../models/pointtransactions";
 import { Profile } from "../models/profiles";
 import { User } from "../models/users";
-import { PointTransactions } from "../models/pointtransactions"
 
 if (process.env.NODE_ENV !== "production") {
     dotenv.config();
@@ -95,10 +95,10 @@ PointTransactions.init({
         primaryKey: true,
     },
     pointsGained: {
-        type: new DataTypes.INTEGER,
+        type: new DataTypes.INTEGER(),
     },
     pointsLost: {
-        type: new DataTypes.INTEGER,
+        type: new DataTypes.INTEGER(),
     },
     category: {
         type: new DataTypes.STRING(256),
@@ -107,7 +107,7 @@ PointTransactions.init({
     date: {
         type: new DataTypes.DATE(6),
         allowNull: false,
-    }
+    },
 }, {
     tableName: "transactions",
     sequelize,
