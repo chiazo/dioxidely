@@ -1,30 +1,20 @@
-# Edu Team Site
+# Dioxidely
+(Based on edu-team-site from UNC-CS-SG)
 
-## Required global libraries
+## Getting Started
 
-* gulp-cli
+**Install required dependencies**
 
-## FAQs / Basic Troubleshooting
+*Install gulp globally for build scripts*
 
-**Help! I'm getting the error (another port running on same) EACCESS**
+`npm install -g gulp-cli`
 
-## Groundwork (To Do)
+`npm install`
 
-### Backend
-* Postgres DB
-* NodeJS Runtime
-* Binary Blob Storage
-* DB Middleware Controller with Sequelize
-* Express server
-* [Multer](https://github.com/expressjs/multer) to support file uploads
+**Build from Typescript sources**
 
-### Frontend
-* Typescript Linting
-* SASS/SCSS Compiling
-* [EJS Templating](https://ejs.co/)
-* Basic data render of DB "Team Member" Table rows into HTML table
-* Scaffolding for stylesheets
+`npm build`
 
-### DevOps
-* Vagrantfile for local dev env
-* GitHub Repository with team permissions
+**Run server locally**
+
+`npm start`
