@@ -6,7 +6,10 @@
   "scripts": {
     "build": "gulp",
     "prestart": "npm run build",
-    "start": "node .",
+    "tsc": "tsc",
+    "tsc:w": "tsc -w",
+    "lite": "lite-server",
+    "start": " concurrently node . \"npm run lite\" ",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
