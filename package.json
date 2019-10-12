@@ -6,17 +6,23 @@
   "scripts": {
     "build": "gulp",
     "prestart": "npm run build",
-    "start": "nodemon node .",
+    "start:watch": "nodemon",
+    "start": "node .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/passport": "^1.0.1",
+    "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.19.0",
     "dotenv": "^8.1.0",
     "ejs": "^2.7.1",
     "express": "^4.17.1",
+    "express-session": "^1.17.0",
     "mime": "^2.4.4",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
     "pg": "^7.12.1",
     "pg-hstore": "^2.3.3",
     "request": "^2.88.0",
@@ -41,5 +47,11 @@
     "fancy-log": "1.3.3",
     "vinyl-source-stream": "2.0.0",
     "tsify": "4.0.1"
+  },
+  "nodemonConfig": {
+    "ignore": ["**/*.test.ts","**/*.spec.ts",".git","node_modules"],
+    "watch": ["src"],
+    "exec": "npm start",
+    "ext": "ts"
   }
 }
