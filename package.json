@@ -6,7 +6,7 @@
   "scripts": {
     "build": "gulp",
     "prestart": "npm run build",
-    "start": "node .",
+    "start": "nodemon node .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
