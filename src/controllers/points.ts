@@ -23,28 +23,8 @@ router.get("/helloworld", (req, res) => {
 
 */
 
-const dummyData = {
-   1: {
-       name: "Chiazo",
-       pointBalance: 100,
-   },
-   2: {
-       name: "Visrut",
-       pointBalance: 200,
-   },
-};
-
 router.get("/getBalanceById", (req, res) => {
     const profId: number = Number(req.query.profileId);
-    console.log(profId);
-    const profPoints: number = dummyData[profId].pointBalance;
-    console.log(profPoints);
-    res.send(profPoints.toString());
-});
-
-router.get("/getBalanceById/db", (req, res) => {
-    const profId: number = Number(req.query.profileId);
-    console.log(profId);
 
     // Get data from db
     ProfileORM.findOne({
@@ -64,6 +44,27 @@ router.get("/addToBalanceById", (req, res) => {
 
     const profId: number = Number(req.query.profileId);
     const addition: number = 10;
+
+    ProfileORM.findOne({
+        where: {
+            id: profId,
+        },
+
+    }).
+    then((profile) => {
+        profile.currentPointBalance += addition;
+        profile.save();
+        res.send({
+            pointBalance: profile.currentPointBalance,
+        });
+    }).catch((err) => {
+        res.send(err);
+    });
+});
+
+router.get("/subtractFromBalanceById", (req, res) => {
+    const profId: number = Number(req.query.profileId);
+    const subtraction: number = 10;
     console.log(profId);
 
     ProfileORM.findOne({
@@ -71,32 +72,14 @@ router.get("/addToBalanceById", (req, res) => {
             id: profId,
         },
     }).then((profile) => {
-        profile.pointTotal += 10;
+        profile.currentPointBalance -= subtraction;
         profile.save();
-        res.send(profile);
+        res.send({
+            pointBalance: profile.currentPointBalance,
+        });
     }).catch((err) => {
         res.send(err);
     });
-
-    // const prof = dummyData[profId];
-    // const profPoints: number = dummyData[profId].pointBalance + addition;
-    // prof.pointBalance += addition;
-    // console.log(profPoints);
-    // res.send(profPoints.toString());
-});
-
-router.get("/subtractFromBalanceById", (req, res) => {
-    const profId: number = Number(req.query.profileId);
-    const subtraction: number = 10;
-    console.log(profId);
-    const prof = dummyData[profId];
-    const profPoints: number = dummyData[profId].pointBalance;
-    prof.pointBalance -= subtraction;
-    if (profPoints < 0) {
-        prof.pointBalance = 0;
-    }
-    console.log(profPoints);
-    res.send(profPoints.toString());
 });
 
 export default router;
