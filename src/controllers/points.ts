@@ -1,8 +1,8 @@
 import express, { response } from "express";
 import request from "request";
 import { INTEGER } from "sequelize/types";
+import { ProfileORM, sequelize } from "../db/sequelize";
 import { Profile } from "../models/profiles";
-// import { sequelize } from "../db/sequelize";
 
 const router = express.Router();
 
@@ -40,6 +40,22 @@ router.get("/getBalanceById", (req, res) => {
     const profPoints: number = dummyData[profId].pointBalance;
     console.log(profPoints);
     res.send(profPoints.toString());
+});
+
+router.get("/getBalanceById/db", (req, res) => {
+    const profId: number = Number(req.query.profileId);
+    console.log(profId);
+
+    // Get data from db
+    ProfileORM.findOne({
+        where: {
+            id: profId,
+        },
+    }).then((profile) => {
+        res.send(profile);
+    }).catch((err) => {
+        res.send(err);
+    });
 });
 
 router.get("/addToBalanceById", (req, res) => {
