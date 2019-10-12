@@ -2,6 +2,7 @@ import dotenv from "dotenv";
 import { DataTypes, Sequelize } from "sequelize";
 
 import { Profile } from "../models/profiles";
+import { User } from "../models/users";
 
 if (process.env.NODE_ENV !== "production") {
     dotenv.config();
@@ -64,6 +65,25 @@ Profile.init({
     },
 }, {
     tableName: "profiles",
+    sequelize,
+});
+
+User.init({
+    id: {
+        type: DataTypes.INTEGER.UNSIGNED,
+        autoIncrement: true,
+        primaryKey: true,
+    },
+    email: {
+        type: new DataTypes.STRING(256),
+        unique: true,
+    },
+    password: {
+        type: new DataTypes.STRING(512),
+        allowNull: false,
+    },
+}, {
+    tableName: "users",
     sequelize,
 });
 
