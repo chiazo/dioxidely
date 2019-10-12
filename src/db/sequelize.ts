@@ -3,7 +3,7 @@ import { DataTypes, Sequelize } from "sequelize";
 
 import { Profile } from "../models/profiles";
 import { User } from "../models/users";
-import { PointTransaction } from "../models/pointtransactions"
+import { PointTransactions } from "../models/pointtransactions"
 
 if (process.env.NODE_ENV !== "production") {
     dotenv.config();
@@ -88,7 +88,7 @@ User.init({
     sequelize,
 });
 
-PointTransaction.init({
+PointTransactions.init({
     id: {
         type: DataTypes.INTEGER.UNSIGNED,
         autoIncrement: true,
