@@ -11,6 +11,9 @@ const sequelize = new Sequelize(
     process.env.DATABASE_URL,
     {
         dialect: "postgres",
+        dialectOptions: {
+            ssl: true,
+        },
         pool: {
             max: 5,
             min: 0,
@@ -56,16 +59,19 @@ Profile.init({
         // require: false,
         unique: false,
     },
+    currentPointBalance: {
+        type: DataTypes.INTEGER.UNSIGNED,
+    },
 }, {
     tableName: "profiles",
     sequelize,
 });
 
 // sequelize.profiles = Profiles.init_table(sequelize);
-/*sequelize.sync().then(() => {
+sequelize.sync().then(() => {
     console.log("DB Models synchronized.");
 });
-*/
+
 /**
  * Define Relationships
  */

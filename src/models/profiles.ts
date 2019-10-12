@@ -8,6 +8,8 @@ class Profile extends Model {
     public bio: string;
     public imageUrl: string;
 
+    public currentPointBalance: number;
+
     public readonly createdAt!: Date;
     public readonly updatedAt!: Date;
 }

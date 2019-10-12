@@ -11,6 +11,7 @@ async function createDummyProfile(firstNamesList: string[], lastNamesList: strin
     ProfileORM.create({
         firstName,
         lastName,
+        currentPointBalance: Math.floor(Math.random() * 100),
     }).then((prof) => {
         console.log(`Created profile with id: ${prof.id}`);
     }).catch((err) => {
