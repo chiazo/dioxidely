@@ -62,10 +62,10 @@ Profile.init({
 });
 
 // sequelize.profiles = Profiles.init_table(sequelize);
-sequelize.sync().then(() => {
+/*sequelize.sync().then(() => {
     console.log("DB Models synchronized.");
 });
-
+*/
 /**
  * Define Relationships
  */
