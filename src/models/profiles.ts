@@ -7,6 +7,7 @@ class Profile extends Model {
     public lastName!: string;
     public bio: string;
     public imageUrl: string;
+    public pointTotal: number;
 
     public currentPointBalance: number;
 

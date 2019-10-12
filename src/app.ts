@@ -1,8 +1,8 @@
 import bodyParser = require("body-parser");
 import express = require("express");
 import path from "path";
-
 import index from "./controllers/index";
+import points from "./controllers/points";
 
 const app = express();
 
@@ -22,6 +22,7 @@ app.use("/static", express.static(path.join( __dirname, "static" )));
  * API Routes
  */
 app.use("/", index);
+app.use("/points", points);
 
 app.get("/", (req, res) => {
     res.render("index.ejs", {name: ""});
