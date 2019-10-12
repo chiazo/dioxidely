@@ -52,21 +52,37 @@ router.get("/getBalanceById/db", (req, res) => {
             id: profId,
         },
     }).then((profile) => {
-        res.send(profile);
+        res.send({
+            pointBalance: profile.currentPointBalance,
+        });
     }).catch((err) => {
         res.send(err);
     });
 });
 
 router.get("/addToBalanceById", (req, res) => {
+
     const profId: number = Number(req.query.profileId);
     const addition: number = 10;
     console.log(profId);
-    const prof = dummyData[profId];
-    const profPoints: number = dummyData[profId].pointBalance + addition;
-    prof.pointBalance += addition;
-    console.log(profPoints);
-    res.send(profPoints.toString());
+
+    ProfileORM.findOne({
+        where: {
+            id: profId,
+        },
+    }).then((profile) => {
+        profile.pointTotal += 10;
+        profile.save();
+        res.send(profile);
+    }).catch((err) => {
+        res.send(err);
+    });
+
+    // const prof = dummyData[profId];
+    // const profPoints: number = dummyData[profId].pointBalance + addition;
+    // prof.pointBalance += addition;
+    // console.log(profPoints);
+    // res.send(profPoints.toString());
 });
 
 router.get("/subtractFromBalanceById", (req, res) => {
