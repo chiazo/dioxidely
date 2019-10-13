@@ -1,6 +1,7 @@
 import dotenv from "dotenv";
 import { DataTypes, Sequelize } from "sequelize";
 
+import { PointTransactions } from "../models/pointtransactions";
 import { Profile } from "../models/profiles";
 import { User } from "../models/users";
 
@@ -84,6 +85,31 @@ User.init({
     },
 }, {
     tableName: "users",
+    sequelize,
+});
+
+PointTransactions.init({
+    id: {
+        type: DataTypes.INTEGER.UNSIGNED,
+        autoIncrement: true,
+        primaryKey: true,
+    },
+    pointsGained: {
+        type: new DataTypes.INTEGER(),
+    },
+    pointsLost: {
+        type: new DataTypes.INTEGER(),
+    },
+    category: {
+        type: new DataTypes.STRING(256),
+        allowNull: false,
+    },
+    date: {
+        type: new DataTypes.DATE(6),
+        allowNull: false,
+    },
+}, {
+    tableName: "transactions",
     sequelize,
 });
 

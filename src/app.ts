@@ -4,6 +4,7 @@ import session = require("express-session");
 import passport = require("passport");
 import path from "path";
 import index from "./controllers/index";
+import marketplace from "./controllers/marketplace";
 import points from "./controllers/points";
 
 import passport_local = require("passport-local");
@@ -50,6 +51,7 @@ passport.deserializeUser((id: number, done) => {
  */
 app.use("/", index);
 app.use("/points", points);
+app.use("/marketplace", marketplace);
 
 app.get("/", (req, res) => {
     res.render("index.ejs", {name: ""});

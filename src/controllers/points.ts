@@ -73,6 +73,9 @@ router.get("/subtractFromBalanceById", (req, res) => {
         },
     }).then((profile) => {
         profile.currentPointBalance -= subtraction;
+        if (profile.currentPointBalance < 0) {
+            profile.currentPointBalance = 0;
+        }
         profile.save();
         res.send({
             pointBalance: profile.currentPointBalance,
