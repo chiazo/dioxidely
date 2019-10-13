@@ -1,9 +1,9 @@
 import express, { response } from "express";
 import request from "request";
 import { INTEGER } from "sequelize/types";
-import { ProfileORM, sequelize } from "../db/sequelize";
+import { ProfileORM, sequelize, EmissionTransactionORM } from "../db/sequelize";
 import { Profile } from "../models/profiles";
-import { EmissionTransaction } from "../models/emissiontransactions";
+// import { EmissionTransaction } from "../models/emissiontransactions";
 
 const router = express.Router();
 
@@ -79,7 +79,7 @@ router.post("/buyCarbonOffsets", (req, res) => {
                     profile.currentPointBalance -= 50;
                     profile.save();
                     // update emission transactions; create new 
-                    EmissionTransaction.build({
+                    EmissionTransactionORM.build({
                         date: new Date(),
                         units: req.body.units, 
                         profId: req.body.profId
@@ -102,19 +102,17 @@ router.post("/buyCarbonOffsets", (req, res) => {
 
 router.get("/viewCarbonOffsets", (req, res) => {
     const profId: number = Number(req.query.profileId);
-    let totalOffsets: number = 0;
+    // let totalOffsets: number = 0;
 
-    EmissionTransaction.findOne({
+    EmissionTransactionORM.findAll({
         where: {
-            id: profId,
+            profileId: profId,
         },
 
     }).
-    then((emission) => {
-        totalOffsets += emission.units;
-        res.send({
-            offSetAmount: totalOffsets,
-        });
+    then((transactions) => {
+        // totalOffsets += transactions.units;
+        res.send(transactions);
     }).catch((err) => {
         res.send(err);
     });
