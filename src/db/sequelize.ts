@@ -99,3 +99,4 @@ sequelize.sync().then(() => {
 // Export modules
 export { sequelize };
 export { Profile as ProfileORM };
+export { User as UserORM };
