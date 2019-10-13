@@ -12,8 +12,8 @@ const LocalStrategy = passport_local.Strategy;
 
 import { passport_strategy } from "./config/passport/passport";
 
-import { User } from "./models/users";
 import { UserORM } from "./db/sequelize";
+import { User } from "./models/users";
 
 const app = express();
 
@@ -43,7 +43,15 @@ passport.serializeUser((user: UserORM, done) => {
 });
 
 passport.deserializeUser((id: number, done) => {
-
+    UserORM.findOne({
+        where: {
+            id,
+        },
+    }).then((user: UserORM) => {
+        return user;
+    }).catch((err) => {
+        return null;
+    });
 });
 
 /**
