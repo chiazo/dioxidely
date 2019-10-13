@@ -1,8 +1,10 @@
 import express, { response } from "express";
+import passport from "passport";
 import request from "request";
 import { INTEGER } from "sequelize/types";
 import { EmissionTransactionORM, ProfileORM, sequelize } from "../db/sequelize";
 import { Profile } from "../models/profiles";
+import { User } from "../models/users";
 // import { EmissionTransaction } from "../models/emissiontransactions";
 
 const router = express.Router();
@@ -61,14 +63,15 @@ router.get("/helloworld", (req, res) => {
  * units: number // it's tonnes of kgCO2e
  *
  */
-router.post("/buyCarbonOffsets", (req, res) => {
+router.post("/buyCarbonOffsets", passport.authenticate("authtoken", { session: false }), (req, res) => {
     const userCategory = req.body.category;
 
-    const profId: number = Number(req.query.profileId);
+    // const profId: number = Number(req.query.profileId);
+    const user = req.user as User;
 
     ProfileORM.findOne({
         where: {
-            id: profId,
+            linkedUserId: user.id,
         },
 
     }).
@@ -100,13 +103,14 @@ router.post("/buyCarbonOffsets", (req, res) => {
     });
 });
 
-router.get("/viewCarbonOffsets", (req, res) => {
-    const profId: number = Number(req.query.profileId);
+router.get("/viewCarbonOffsets", passport.authenticate("authtoken", { session: false }), (req, res) => {
+    // const profId: number = Number(req.query.profileId);
+    const user = req.user as User;
     // let totalOffsets: number = 0;
 
     EmissionTransactionORM.findAll({
         where: {
-            profileId: profId,
+            linkedUserId: user.id,
         },
 
     }).
