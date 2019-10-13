@@ -3,6 +3,7 @@ import { sequelize } from "../db/sequelize";
 
 class Profile extends Model {
     public id!: number;
+    public linkedUserId: number;
     public firstName!: string;
     public lastName!: string;
     public bio: string;

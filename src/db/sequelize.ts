@@ -37,6 +37,10 @@ Profile.init({
         // require: true,
         primaryKey: true,
     },
+    linkedUserId: {
+        type: DataTypes.INTEGER.UNSIGNED,
+        // allowNull: false,
+    },
     // TODO: Consider names in an internationalization context.
     firstName: {
         type: new DataTypes.STRING(128),

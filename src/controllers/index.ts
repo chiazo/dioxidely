@@ -3,7 +3,7 @@ import crypto = require("crypto");
 import express, { response } from "express";
 import passport = require("passport");
 import request from "request";
-import { sequelize, UserORM } from "../db/sequelize";
+import { ProfileORM, sequelize, UserORM } from "../db/sequelize";
 
 const router = express.Router();
 
@@ -23,6 +23,8 @@ router.get("/helloworld", (req, res) => {
 router.post("/register", (req, res) => {
     const email = req.body.email;
     const password = req.body.password;
+    const firstName = req.body.firstName;
+    const lastName = req.body.lastName;
 
     UserORM.build({
         email,
@@ -30,6 +32,14 @@ router.post("/register", (req, res) => {
         authToken: generateAuthToken(),
     }).save()
     .then((builtUser) => {
+        // Build corresponding profile
+        ProfileORM.build({
+            linkedUserId: builtUser.id,
+            currentPointBalance: 100,
+            firstName,
+            lastName,
+        })
+        .save();
         res.send(builtUser);
     }).catch((err) => {
         res.status(500).send(err);
@@ -61,6 +71,26 @@ router.post("/login", (req, res) => {
        const newToken = generateAuthToken();
        user.authToken = newToken;
        user.save();
+
+       // Check if profile exists
+       ProfileORM.findOne({
+           where: {
+               linkedUserId: user.id,
+           },
+       }).then((profile) => {
+           if (!profile) {
+               console.log("Profile does not exist! Creating now w/ 100 pts");
+                // Build corresponding profile
+               ProfileORM.build({
+                    firstName: "",
+                    lastName: "",
+                    linkedUserId: user.id,
+                    currentPointBalance: 100,
+                })
+                .save();
+           }
+       });
+
        res.send({ email: user.email, authToken: user.authToken });
     }).catch((err) => {
         res.status(500).send({ message: err });
