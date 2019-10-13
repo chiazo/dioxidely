@@ -2,6 +2,7 @@ import dotenv from "dotenv";
 import { DataTypes, Sequelize } from "sequelize";
 
 import { PointTransactions } from "../models/pointtransactions";
+import { EmissionTransaction } from "../models/emissiontransactions";
 import { Profile } from "../models/profiles";
 import { User } from "../models/users";
 
@@ -110,6 +111,29 @@ PointTransactions.init({
     },
 }, {
     tableName: "transactions",
+    sequelize,
+});
+
+EmissionTransaction.init({
+    id: {
+        type: DataTypes.INTEGER.UNSIGNED,
+        autoIncrement: true,
+        primaryKey: true,
+    },
+    date: {
+        type: new DataTypes.DATE(6),
+        allowNull: false,
+    },
+    units: {
+        type: DataTypes.INTEGER.UNSIGNED,
+        allowNull: false,
+    },
+    profileId: {
+        type: DataTypes.INTEGER.UNSIGNED,
+        allowNull: false,
+    }
+}, {
+    tableName: "emissions",
     sequelize,
 });
 
