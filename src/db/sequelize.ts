@@ -150,3 +150,4 @@ sequelize.sync().then(() => {
 export { sequelize };
 export { Profile as ProfileORM };
 export { User as UserORM };
+export { EmissionTransaction as EmissionTransactionORM };
