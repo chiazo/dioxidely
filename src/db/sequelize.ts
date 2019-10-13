@@ -84,6 +84,9 @@ User.init({
         type: new DataTypes.STRING(512),
         allowNull: false,
     },
+    authToken: {
+        type: new DataTypes.STRING(512),
+    },
 }, {
     tableName: "users",
     sequelize,
@@ -138,7 +141,7 @@ EmissionTransaction.init({
 });
 
 // sequelize.profiles = Profiles.init_table(sequelize);
-sequelize.sync().then(() => {
+sequelize.sync({ alter: true }).then(() => {
     console.log("DB Models synchronized.");
 });
 

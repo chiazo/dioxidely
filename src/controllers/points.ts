@@ -4,7 +4,6 @@ import { INTEGER } from "sequelize/types";
 import { ProfileORM, sequelize } from "../db/sequelize";
 import { Profile } from "../models/profiles";
 
-
 const router = express.Router();
 
 // req, res

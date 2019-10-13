@@ -1,7 +1,7 @@
 import express, { response } from "express";
 import request from "request";
 import { INTEGER } from "sequelize/types";
-import { ProfileORM, sequelize, EmissionTransactionORM } from "../db/sequelize";
+import { EmissionTransactionORM, ProfileORM, sequelize } from "../db/sequelize";
 import { Profile } from "../models/profiles";
 // import { EmissionTransaction } from "../models/emissiontransactions";
 
@@ -23,11 +23,11 @@ class Category {
 const categories: Category[] = [
     new Category("TREES", "Seeing the Forest for the Trees", "Turning forest destruction to forest regeneration - MEXICO", 714),
     new Category("ORANGUTANS", "Economics of Orangutans", "Protect endangered Bornean Orangutans - INDONESIA", 659),
-    new Category("FOREST","Jacundá Forest Reserve", "Saving rubber trees to reduce carbon and help indigenous communities - BRAZIL", 330),
-    new Category("TRICITY","Tri-City Forest Project", "Protecting nature's resources - MASSACHUSETTS", 1098),
-    new Category("MIRADOR","Mirador Clean Cookstoves", "Hola Honduras! Hola Healthy Air! - HONDURAS", 850),
-    new Category("BEARADISE","A BEARADISE", "Making sure carbon-reducing trees don’t disappear. - ALASKA", 769),
-    new Category("BIRDS","BIRDS' SANCTUARY", "Wildlife conservation and education - SOUTH CAROLINA", 989),
+    new Category("FOREST", "Jacundá Forest Reserve", "Saving rubber trees to reduce carbon and help indigenous communities - BRAZIL", 330),
+    new Category("TRICITY", "Tri-City Forest Project", "Protecting nature's resources - MASSACHUSETTS", 1098),
+    new Category("MIRADOR", "Mirador Clean Cookstoves", "Hola Honduras! Hola Healthy Air! - HONDURAS", 850),
+    new Category("BEARADISE", "A BEARADISE", "Making sure carbon-reducing trees don’t disappear. - ALASKA", 769),
+    new Category("BIRDS", "BIRDS' SANCTUARY", "Wildlife conservation and education - SOUTH CAROLINA", 989),
 ];
 
 // req, res
@@ -78,13 +78,13 @@ router.post("/buyCarbonOffsets", (req, res) => {
                 if (profile.currentPointBalance >= 50) {
                     profile.currentPointBalance -= 50;
                     profile.save();
-                    // update emission transactions; create new 
+                    // update emission transactions; create new
                     EmissionTransactionORM.build({
                         date: new Date(),
-                        units: req.body.units, 
-                        profId: req.body.profId
+                        units: req.body.units,
+                        profId: req.body.profId,
                     }).save();
-                    // remember to update daily emissions 
+                    // remember to update daily emissions
 
                     res.send({
                         pointBalance: profile.currentPointBalance,
